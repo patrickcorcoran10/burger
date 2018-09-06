@@ -1,20 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="create-form" id="burger_board">
+                <h2>Create Your Own Burger</h2>
+                    <div class="form-group">
+                    <label for="ca">Burger Name</label>
+                    <input type="text" id="burger" name="name">
+                <button type="submit">Add burger</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <h2>Hamburger Board</h2>
 
 <h4></h4>
 {{!-- <div id="main" style="width: 320px; height: 400px;">
    <img src="../public/assets/img/burger.jpeg" height="400" />
 </div> --}}
-<form class="create-form" id="burger_board">
-<br>
-<h2>Create Your Own Burger</h2>
 
-
-  <div class="form-group">
-    <label for="ca">Burger Name</label>
-    <input type="text" id="burger" name="name">
-  </div>
-
-<button type="submit">Add burger</button>
 <h5>Burgers that are mouth watering!</h5>
 <ul id="burger_board">
     {{#each burgers}}
@@ -30,7 +34,43 @@
 <ul>
     {{#each burgers}}
         {{#if devoured}}
-            {{burgers devoured=false}}
+            <div class="eaten">
+                <div>
+            {{> burgers devoured=true}}
+            </div>
+            </div>
         {{/if}}
     {{/each}}
 </ul>
+
+```````````````````````````
+<script>
+    $(".create-form").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    console.log(this);
+    
+    event.preventDefault();
+    console.log("stuff");
+    
+    // var newBurger = {
+    //  name: $("#burger").val().trim(),
+    //  devoured: false
+    // };
+
+    var newBurger = $("#burger").val().trim()
+    console.log(newBurger);
+    
+
+    // Send the POST request.
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: newBurger
+    }).then(
+      function() {
+        console.log("created new burger");
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+</script>

@@ -9,16 +9,18 @@ var burger = {
         });
     },
 
-    devourBurger: function(cols, vals, cb) {
-        orm.devourBurger("burgers", "devoured", true);
+    devourBurger: function(objColVals, condition, cb) {
+        orm.devourBurger("burgers", objColVals, condition, function(res) {
+            cb(res);
+        });
 
     },
 
-    create: function(res) {
-        orm.createBurger("burgers", "burger_name")
+    create: function(table, col, val, cb) {
+        orm.createBurger("burgers", "condition", function(res) {
+            cb(res);
+        })
     }
-
-
 };
 
 
