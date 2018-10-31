@@ -8,21 +8,16 @@ var burger = {
             cb(res);
         });
     },
-
-    devourBurger: function(objColVals, condition, cb) {
-        orm.devourBurger("burgers", objColVals, condition, function(res) {
+    create: function(col, vals, cb) {
+        orm.createBurger("burgers", cols, vals, function(res) {
+            cb(res);
+        })
+    },
+    devourBurger: function(col, condition, cb) {
+        orm.devourBurger("burgers", col, condition, function(res) {
             cb(res);
         });
 
-    },
-
-    create: function(table, col, val, cb) {
-        orm.createBurger("burgers", "condition", function(res) {
-            cb(res);
-        })
     }
 };
-
-
-
 module.exports = burger;

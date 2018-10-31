@@ -1,6 +1,7 @@
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <form class="create-form" id="burger_board">
                 <h2>Create Your Own Burger</h2>
                     <div class="form-group">
@@ -22,10 +23,12 @@
 <h5>Burgers that are mouth watering!</h5>
 <ul id="burger_board">
     {{#each burgers}}
+        {{#unless this.devoured}}
         <li>
             <p>Burger Name: {{this.burger_name}}</p>
             <button id="devour">Devour</button>
         </li>
+        {{/unless}}
     {{/each}}
 </ul>
 
@@ -36,7 +39,7 @@
         {{#if devoured}}
             <div class="eaten">
                 <div>
-            {{> burgers devoured=true}}
+            <p>{{>burgers devoured=true}}</p>
             </div>
             </div>
         {{/if}}
@@ -57,7 +60,10 @@
     //  devoured: false
     // };
 
-    var newBurger = $("#burger").val().trim()
+    var newBurger = {
+        name: $("#burger").val().trim(),
+        devoured: false
+    };
     console.log(newBurger);
     
 
@@ -72,5 +78,26 @@
         location.reload();
       }
     );
+    $(function() {
+    $("#devour").on("click", function(event) {
+        var id = $(this).data("id");
+        var newDevour = $(this).data("newDevour");
+
+        var newDevourState = {
+            devoured: newDevour
+        };
+
+        $.ajax("/api/burgers/" + id, {
+            type: "PUT",
+            data: newDevourState
+        }).then(
+            function() {
+                console.log("changed devoured state", newDevour);
+
+                location.reload();
+            }
+        );
+    });
+});
   });
 </script>
